@@ -1,0 +1,28 @@
+version: '3'
+ 
+services:
+  db:
+    restart: always
+    image: mysql:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kidali_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata2:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8080:80
+volumes:
+  dbdata2:
